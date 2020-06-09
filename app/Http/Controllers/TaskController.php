@@ -37,5 +37,14 @@ class TaskController extends Controller
 //        ]);
     }
 
+    public function showCreateForm(int $id)
+    {
+        return view('task/create', [
+            'folder_id' => $id
+        ]);
+
+
+    }
+
 
 }
