@@ -8,6 +8,7 @@ use App\Task;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTask;
 use App\Http\Requests\EditTask;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -19,13 +20,17 @@ class TaskController extends Controller
         // すべてのフォルダを取得する
         $folders = Folder::all();
 
+        // ★ ユーザーのフォルダを取得する
+        $folders = Auth::user()->folders()->get();
+
         // 選ばれたフォルダを取得する
         $current_folder = Folder::find($id);
 
         // 選ばれたフォルダに紐づくタスクを取得する
 //        $tasks = Task::where('folder_id', $current_folder->id)->get();
         // 選ばれたフォルダに紐づくタスクを取得する
-        $tasks = $current_folder->tasks()->get(); // ★
+        $tasks = $current_folder->tasks()->get();
+
 
         return view('tasks/index', [
             'folders' => $folders,
